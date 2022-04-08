@@ -1,40 +1,74 @@
 export default {
-  // Target: https://go.nuxtjs.dev/config-target
-  target: 'static',
+	// Target: https://go.nuxtjs.dev/config-target
+	target: 'static',
 
-  // Global page headers: https://go.nuxtjs.dev/config-head
-  head: {
-    title: 'builder-demo',
-    htmlAttrs: {
-      lang: 'en',
-    },
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' },
-    ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-  },
+	env: {
+		baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+	},
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+	// Global page headers: https://go.nuxtjs.dev/config-head
+	head: {
+		title: '22squared',
+		htmlAttrs: {
+			lang: 'en',
+		},
+		meta: [
+			{ charset: 'utf-8' },
+			{
+				name: 'viewport',
+				content: 'width=device-width, initial-scale=1',
+			},
+			{ hid: 'description', name: 'description', content: '' },
+			{ name: 'format-detection', content: 'telephone=no' },
+		],
+		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+	},
 
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+	// Global CSS: https://go.nuxtjs.dev/config-css
+	css: ['@/assets/scss/main.scss'],
+	styleResources: {
+		scss: ['@/assets/scss/_variables.scss'],
+	},
 
-  // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+	// Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
+	plugins: [],
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-    // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss',
-  ],
+	// Auto import components: https://go.nuxtjs.dev/config-components
+	components: true,
 
-  // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+	// Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
+	buildModules: [
+		// https://go.nuxtjs.dev/tailwindcss
+		'@nuxtjs/tailwindcss',
+		'@nuxtjs/fontawesome',
+		'@nuxtjs/google-fonts',
+	],
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
-}
+	// Modules: https://go.nuxtjs.dev/config-modules
+	modules: ['@nuxtjs/style-resources'],
+
+	// Build Configuration: https://go.nuxtjs.dev/config-build
+	build: {
+		postcss: {
+			plugins: {
+				tailwindcss: './tailwind.config.js',
+				autoprefixer: {},
+			},
+		},
+	},
+
+	fontawesome: {
+		icons: {
+			solid: true,
+			brands: true,
+		},
+	},
+
+	googleFonts: {
+		families: {
+			'Playfair+Display': true,
+			'Work+Sans': true,
+		},
+		display: 'swap',
+	},
+};
