@@ -9,6 +9,7 @@
 		"generate": "nuxt generate"
 	},
 	"dependencies": {
+		"@builder.io/sdk-vue": "^0.0.1-50",
 		"@builder.io/vue": "^0.1.12",
 		"@fortawesome/fontawesome-svg-core": "^6.1.1",
 		"core-js": "^3.19.3",
