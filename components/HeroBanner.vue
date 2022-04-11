@@ -1,10 +1,16 @@
 <template>
-	<section class="hero-banner mb-4">
-		<!-- <section class="hero-banner mb-4" :style="{ backgroundImage: 'url(' + slice.primary.background.url + ')' }"> -->
+	<section
+		class="hero-banner mb-4"
+		:style="{ backgroundImage: 'url(' + backgroundImage + ')' }">
 		<div class="banner-content">
-			<h1 class="banner-title">Hero Copy</h1>
-			<p class="mb-8 banner-description"></p>
-			<p class="banner-button">Call to Action</p>
+			<h1 class="banner-title">{{ title }}</h1>
+			<p class="mb-8 banner-description">{{ description }}</p>
+			<a
+				class="banner-button"
+				:href="cta.ctaLink"
+				:target="cta.target ? '_blank' : '_self'">
+				{{ cta.ctaCopy }}
+			</a>
 		</div>
 	</section>
 </template>
@@ -12,6 +18,20 @@
 <script>
 	export default {
 		name: 'HeroBannerSlice',
+		props: {
+			title: {
+				type: String,
+			},
+			description: {
+				type: String,
+			},
+			cta: {
+				type: Object,
+			},
+			backgroundImage: {
+				type: String,
+			},
+		},
 	};
 </script>
 

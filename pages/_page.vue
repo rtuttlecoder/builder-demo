@@ -1,41 +1,41 @@
 <template>
-	<div v-if="notFound">
-		<!-- Show your 404 content -->
-		Page not found
-	</div>
-	<div v-else>
-		<RenderContent
-			:key="$route.path"
-			model="page"
-			:options="{
-				url: $route.path,
-			}"
-			@contentLoaded="contentLoaded"
-			@contentError="contentError" />
+	<div>
+		<div v-if="canShowContent">
+			<builder-render-content model="page" :content="content" />
+		</div>
 	</div>
 </template>
 
 <script>
-	import { builder, RenderContent } from '@builder.io/vue';
+	// import { builder, RenderContent } from '@builder.io/vue';
+	import { getContent, isEditing } from '@builder.io/sdk-vue';
 	import '../scripts/register-builder-components';
 
 	// TODO: enter your public API key
-	builder.init('593f714c13a94bc4b37f7ab4a3062a50');
+	const BUILDER_PUBLIC_API_KEY = '593f714c13a94bc4b37f7ab4a3062a50'; // ggignore
+
+	// builder.init('593f714c13a94bc4b37f7ab4a3062a50');
 
 	export default {
-		components: { RenderContent },
 		data: () => ({
-			notFound: false,
+			canShowContent: false,
+			content: null,
 		}),
-		methods: {
-			contentLoaded(content) {
-				if (!content) {
-					if (this.$nuxt.context.ssrContext) {
-						this.$nuxt.context.ssrContext.res.statusCode = 404;
-					}
-					this.notFound = true;
+		async fetch() {
+			const content = await getContent({
+				model: 'page',
+				apiKey: BUILDER_PUBLIC_API_KEY,
+				userAttributes: {
+					urlPath: this.$route.path,
+				},
+			});
+			if (!content) {
+				if (this.$nuxt.context?.ssrContext?.res) {
+					this.$nuxt.context.ssrContext.res.statusCode = 404;
 				}
-			},
+			}
+			this.content = content;
+			this.canShowContent = content || isEditing();
 		},
 	};
 </script>
